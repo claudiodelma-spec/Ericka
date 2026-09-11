@@ -1,0 +1,183 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./sandbox.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  roleId    String
+  role      Role     @relation(fields: [roleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  AuditLog  AuditLog[]
+}
+
+model Role {
+  id          String       @id @default(uuid())
+  name        String       @unique // ADMINISTRADOR, GESTION, OPERADOR, PADRE
+  description String?
+  users       User[]
+  permissions Permission[]
+}
+
+model Permission {
+  id    String @id @default(uuid())
+  code  String @unique
+  roles Role[]
+}
+
+model Setting {
+  id    String @id @default(uuid())
+  key   String @unique
+  value String
+}
+
+model Employee {
+  id         String       @id @default(uuid())
+  name       String
+  dailyWage  Float        @default(200.0)
+  active     Boolean      @default(true)
+  startDate  DateTime     @default(now())
+  endDate    DateTime?
+  payrolls   PayrollDay[]
+}
+
+model PayrollDay {
+  id         String   @id @default(uuid())
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  date       DateTime
+  worked     Boolean  @default(true)
+}
+
+model Expense {
+  id          String   @id @default(uuid())
+  concept     String
+  category    String   // RENTA, NOMINA, DIARIO, SEMANAL, MENSUAL
+  amount      Float
+  date        DateTime @default(now())
+  description String?
+}
+
+model Sale {
+  id        String     @id @default(uuid())
+  total     Float
+  date      DateTime   @default(now())
+  items     SaleItem[]
+}
+
+model SaleItem {
+  id        String  @id @default(uuid())
+  saleId    String
+  sale      Sale    @relation(fields: [saleId], references: [id])
+  productId String
+  quantity  Int
+  price     Float
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  icon     String?
+  active   Boolean   @default(true)
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  imageUrl    String?
+  active      Boolean  @default(true)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+}
+
+model Rent {
+  id         String   @id @default(uuid())
+  concept    String
+  amount     Float
+  periodicity String  @default("SEMANAL") // DIARIO, SEMANAL, MENSUAL
+  startDate  DateTime
+  endDate    DateTime?
+  active     Boolean  @default(true)
+}
+
+model Goal {
+  id          String   @id @default(uuid())
+  name        String
+  target      Float
+  accumulated Float    @default(0.0)
+  startDate   DateTime
+  endDate     DateTime
+  type        String   @default("MENSUAL")
+}
+
+model Savings {
+  id          String   @id @default(uuid())
+  concept     String
+  amount      Float
+  date        DateTime @default(now())
+}
+
+model VacationPeriod {
+  id          String   @id @default(uuid())
+  name        String
+  startDate   DateTime
+  endDate     DateTime
+  targetAmount Float
+  savedAmount Float    @default(0.0)
+}
+
+model DailyMenu {
+  id        String   @id @default(uuid())
+  date      DateTime @unique
+  items     String   // Formato JSON o texto separado
+}
+
+model CarouselImage {
+  id          String  @id @default(uuid())
+  imageUrl    String
+  title       String?
+  order       Int     @default(0)
+  active      Boolean @default(true)
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  orderNumber String      @unique
+  studentName String
+  grade       String
+  group       String?
+  total       Float
+  status      String      @default("RECIBIDO") // RECIBIDO, EN_PREPARACION, LISTO, ENTREGADO, CANCELADO
+  createdAt   DateTime    @default(now())
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id          String  @id @default(uuid())
+  orderId     String
+  order       Order   @relation(fields: [orderId], references: [id])
+  productName String
+  quantity    Int
+  price       Float
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  module    String
+  details   String
+  createdAt DateTime @default(now())
+}

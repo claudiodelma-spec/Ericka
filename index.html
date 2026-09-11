@@ -3,26 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tendita Landy — Sistema Integral</title>
+  <title>Tendita Landy — Sistema Integral Escolar</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="text-slate-800">
+<body class="text-slate-800 antialiased">
 
-  <!-- TOP HEADER -->
-  <header class="bg-slate-900 text-white px-6 py-3 flex justify-between items-center border-b border-slate-800">
+  <!-- BARRA SUPERIOR -->
+  <header class="bg-slate-900 text-white px-6 py-3 flex justify-between items-center border-b border-slate-800 sticky top-0 z-50">
     <div class="flex items-center gap-3">
       <div class="bg-orange-500 text-white font-extrabold text-lg px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg shadow-orange-500/30">
         <i class="fa-solid fa-store"></i> Tendita Landy
       </div>
-      <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">Sistema Escolar Integral • DEMO / SANDBOX</span>
+      <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700 hidden sm:inline-block">
+        Sistema Escolar Integral • SANDBOX
+      </span>
     </div>
     <div class="flex items-center gap-4 text-xs text-slate-300">
-      <span><i class="fa-regular fa-calendar"></i> Hoy, 10 de Septiembre de 2026</span>
+      <span class="hidden md:inline-block"><i class="fa-regular fa-calendar"></i> Hoy, 10 de Septiembre de 2026</span>
       <div class="flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
         <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div>
         <span>Administrador (admin@tenditaandy.com)</span>
@@ -30,18 +35,18 @@
     </div>
   </header>
 
-  <div class="flex min-h-[calc(100vh-60px)]">
+  <div class="flex min-h-[calc(100vh-57px)]">
 
-    <!-- SIDEBAR DE NAVEGACIÓN -->
-    <aside class="w-64 bg-slate-900 text-slate-300 p-4 shrink-0 flex flex-col justify-between border-r border-slate-800">
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <aside class="w-64 bg-slate-900 text-slate-300 p-4 shrink-0 flex flex-col justify-between border-r border-slate-800 hidden lg:flex">
       <div class="space-y-6">
         <div>
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Inicio</p>
           <nav class="space-y-1 text-sm font-semibold">
-            <button onclick="verModulo('Dashboard')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/30">
+            <button onclick="switchView('dashboard')" id="nav-dashboard" class="sidebar-btn active w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
               <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
             </button>
-            <button onclick="verModulo('Gestión Financiera')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white">
+            <button onclick="switchView('gestion')" id="nav-gestion" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
               <i class="fa-solid fa-wallet w-5"></i> Gestión Financiera
             </button>
           </nav>
@@ -50,148 +55,334 @@
         <div>
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Módulos Financieros</p>
           <nav class="space-y-1 text-xs font-medium">
-            <button onclick="verModulo('Rentas')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-house-user w-4"></i> Rentas</button>
-            <button onclick="verModulo('Nómina')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-users w-4"></i> Nómina</button>
-            <button onclick="verModulo('Gastos')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-receipt w-4"></i> Gastos</button>
-            <button onclick="verModulo('Metas y Ahorro')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-bullseye w-4"></i> Metas y Ahorro</button>
+            <button onclick="switchView('rentas')" id="nav-rentas" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-house-user w-4"></i> Rentas</button>
+            <button onclick="switchView('nomina')" id="nav-nomina" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-users w-4"></i> Nómina Variable</button>
+            <button onclick="switchView('gastos')" id="nav-gastos" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-receipt w-4"></i> Gastos</button>
+            <button onclick="switchView('metas')" id="nav-metas" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-bullseye w-4"></i> Metas y Ahorro</button>
+            <button onclick="switchView('vacaciones')" id="nav-vacaciones" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-umbrella-beach w-4"></i> Vacaciones (SEP)</button>
           </nav>
         </div>
 
         <div>
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Tienda de Padres</p>
           <nav class="space-y-1 text-xs font-medium">
-            <button onclick="verModulo('Productos')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-box w-4"></i> Productos</button>
-            <button onclick="verModulo('Pedidos WhatsApp')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-brands fa-whatsapp w-4 text-emerald-400"></i> Pedidos (WhatsApp)</button>
+            <button onclick="switchView('tienda')" id="nav-tienda" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-store w-4 text-orange-400"></i> App Tienda PWA</button>
+            <button onclick="switchView('productos')" id="nav-productos" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-box w-4"></i> Productos</button>
+            <button onclick="switchView('pedidos')" id="nav-pedidos" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-brands fa-whatsapp w-4 text-emerald-400"></i> Pedidos (WhatsApp)</button>
           </nav>
         </div>
       </div>
+
+      <div class="pt-4 border-t border-slate-800 text-xs">
+        <button onclick="switchView('config')" id="nav-config" class="sidebar-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-gear w-4"></i> Configuración General</button>
+      </div>
     </aside>
 
-    <!-- ÁREA PRINCIPAL -->
-    <main class="flex-1 p-6 overflow-y-auto space-y-6">
+    <!-- PANEL PRINCIPAL -->
+    <main class="flex-1 p-4 lg:p-6 overflow-y-auto space-y-6">
 
-      <!-- VISTA DASHBOARD -->
-      <div id="vista-dashboard" class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+      <!-- VISTA: DASHBOARD COMPLETO -->
+      <div id="view-dashboard" class="space-y-6">
+        
+        <!-- TARJETAS SUPERIORES -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-arrow-trend-up"></i></div>
-            <div><p class="text-xs text-slate-400">Ventas del día</p><p class="text-2xl font-extrabold">$ 5,240</p></div>
+            <div>
+              <p class="text-xs font-medium text-slate-400">Ventas del día</p>
+              <p class="text-2xl font-extrabold text-slate-900">$ 5,240</p>
+              <p class="text-[11px] font-bold text-emerald-600 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 12% vs. ayer</p>
+            </div>
           </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-sack-dollar"></i></div>
-            <div><p class="text-xs text-slate-400">Ganancia neta</p><p class="text-2xl font-extrabold text-blue-600">$ 2,480</p></div>
+            <div>
+              <p class="text-xs font-medium text-slate-400">Ganancia neta</p>
+              <p class="text-2xl font-extrabold text-slate-900">$ 2,480</p>
+              <p class="text-[11px] font-bold text-blue-600 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 8% vs. ayer</p>
+            </div>
           </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-            <div><p class="text-xs text-slate-400">Gastos del día</p><p class="text-2xl font-extrabold text-rose-600">$ 2,760</p></div>
+            <div>
+              <p class="text-xs font-medium text-slate-400">Gastos del día</p>
+              <p class="text-2xl font-extrabold text-slate-900">$ 2,760</p>
+              <p class="text-[11px] font-bold text-rose-500 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 5% vs. ayer</p>
+            </div>
           </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
-            <div><p class="text-xs text-slate-400">Total alumnos</p><p class="text-2xl font-extrabold">48</p></div>
+            <div>
+              <p class="text-xs font-medium text-slate-400">Total alumnos</p>
+              <p class="text-2xl font-extrabold text-slate-900">48</p>
+              <p class="text-[11px] font-bold text-purple-600 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 2% vs. semana ant.</p>
+            </div>
           </div>
         </div>
 
+        <!-- SECCIÓN CENTRAL DE METAS Y AHORRO DIARIO -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-            <p class="text-xs font-bold text-amber-500 uppercase"><i class="fa-solid fa-bullseye"></i> Meta Mensual</p>
-            <p class="text-2xl font-black">$ 20,400 <span class="text-sm font-bold text-slate-400">/ $ 30,000</span></p>
-            <div class="w-full bg-slate-100 h-3 rounded-full"><div class="bg-emerald-500 h-full rounded-full" style="width: 66%"></div></div>
-          </div>
 
-          <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-xl space-y-3">
-            <span class="bg-white/20 text-xs px-3 py-1 rounded-full font-bold uppercase"><i class="fa-solid fa-piggy-bank"></i> Ahorro Diario Total</span>
-            <p class="text-4xl font-black">$ 620 <span class="text-lg font-medium text-blue-200">/ día</span></p>
-            <p class="text-xs text-blue-100">Cálculo dinámico en tiempo real que contempla Renta, Nómina y Vacaciones.</p>
-          </div>
-
-          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-            <p class="text-xs font-bold text-slate-400 uppercase"><i class="fa-regular fa-calendar-check"></i> Próximos Pagos</p>
-            <div class="space-y-2 text-xs">
-              <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span>Renta (Semanal)</span><span class="font-bold">$ 2,500</span></div>
-              <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span>Nómina (Semanal)</span><span class="font-bold">$ 1,000</span></div>
-              <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span>Gasto Mensual</span><span class="font-bold">$ 7,000</span></div>
+          <!-- METAS MENSUALES Y VACACIONES -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-5">
+            <div class="border-b border-slate-100 pb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5"><i class="fa-solid fa-bullseye"></i> Meta Mensual</span>
+              <p class="text-2xl font-black text-slate-900 mt-1">$ 20,400 <span class="text-sm font-bold text-slate-400">/ $ 30,000</span></p>
+              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden mt-2">
+                <div class="bg-emerald-500 h-full rounded-full" style="width: 66%"></div>
+              </div>
+              <p class="text-xs text-slate-500 mt-2">Necesitas generar por día: <span class="font-extrabold text-slate-900">$ 333</span></p>
             </div>
+
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 flex items-center gap-1.5"><i class="fa-solid fa-tree"></i> Fondo de Vacaciones (SEP)</span>
+              <p class="text-xs text-slate-400 mt-1">Objetivo: $40,000 • Ahorrado: $24,500</p>
+              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden mt-2">
+                <div class="bg-emerald-400 h-full rounded-full" style="width: 61%"></div>
+              </div>
+              <p class="text-xs text-slate-500 mt-2">Ahorro diario necesario: <span class="font-extrabold text-slate-900">$ 258</span></p>
+            </div>
+          </div>
+
+          <!-- TARJETA DESTACADA AHORRO DIARIO TOTAL -->
+          <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-xl shadow-blue-500/20 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="bg-white/20 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider"><i class="fa-solid fa-piggy-bank"></i> Ahorro Diario Total</span>
+                <span class="text-xs text-blue-200">Algoritmo Activo</span>
+              </div>
+              <p class="text-xs text-blue-100 mb-2">Para cumplir todas tus metas financieras necesitas ahorrar exactamente:</p>
+              <p class="text-4xl font-black tracking-tight mb-2">$ 620 <span class="text-lg font-medium text-blue-200">/ día</span></p>
+              <p class="text-xs text-blue-100 leading-relaxed">Cálculo dinámico en tiempo real que contempla Renta ($2,500/sem), Nómina ($1,000/sem) y Fondo Vacacional.</p>
+            </div>
+            <button onclick="alert('Desglose Financiero:\n- Renta Semanal: $2,500\n- Nómina Variable: $1,000\n- Meta Mensual: $20,400\n\nAhorro Diario Sugerido: $620/día')" class="w-full py-3 bg-white text-blue-700 font-extrabold text-xs rounded-xl shadow-lg hover:bg-blue-50 transition mt-6">
+              Ver desglose detallado <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- PRÓXIMOS PAGOS (SIN STOCK / ALERTAS FINANCIERAS) -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5"><i class="fa-regular fa-calendar-check"></i> Próximos Pagos Obligatorios</h3>
+            
+            <div class="space-y-2.5 text-xs">
+              <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div><p class="font-bold text-slate-800">Renta (Semanal)</p><p class="text-[11px] text-slate-400">Vence 15 Sep</p></div>
+                <span class="font-black text-slate-900">$ 2,500</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div><p class="font-bold text-slate-800">Nómina Variable (4 días)</p><p class="text-[11px] text-slate-400">Vence 15 Sep</p></div>
+                <span class="font-black text-slate-900">$ 1,000</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div><p class="font-bold text-slate-800">Gasto Mensual Estimado</p><p class="text-[11px] text-slate-400">Vence 30 Sep</p></div>
+                <span class="font-black text-slate-900">$ 7,000</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- VISTA PREVIA MOBILE APP TIENDA -->
+        <div class="bg-gradient-to-r from-orange-400 to-amber-500 rounded-3xl p-6 text-white shadow-xl space-y-6">
+          <div class="flex justify-between items-center">
+            <div>
+              <h2 class="text-2xl font-black">📱 App para Padres — Vista Previa Mobile</h2>
+              <p class="text-xs text-orange-100">Experiencia moderna, fácil y divertida para hacer pedidos vía WhatsApp.</p>
+            </div>
+            <button onclick="switchView('tienda')" class="bg-white text-orange-600 text-xs px-4 py-2 rounded-xl font-bold shadow hover:bg-orange-50">Abrir App Completa →</button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-800">
+            
+            <!-- MÓVIL 1 -->
+            <div class="bg-slate-900 p-3 rounded-[32px] border-4 border-slate-800 shadow-2xl">
+              <div class="bg-orange-50 rounded-[24px] p-4 min-h-[380px] flex flex-col justify-between">
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center"><span class="text-xs font-black text-orange-600">Tendita Landy 🥪</span><span class="text-[10px] bg-orange-200 text-orange-800 px-2 py-0.5 rounded-full font-bold">PWA</span></div>
+                  <div><p class="text-xs font-bold text-slate-900">¡Hola, Mamá! 👋</p><p class="text-[10px] text-slate-400">¿Qué quieres pedir hoy?</p></div>
+                  <div class="bg-orange-500 text-white p-3 rounded-2xl text-center shadow-md"><p class="text-xs font-extrabold">¡El sabor del día escolar! 🥪</p></div>
+                  <div class="bg-white p-3 rounded-xl border border-orange-100 space-y-1"><p class="text-[10px] font-bold text-slate-400 uppercase">Menú de hoy</p><p class="text-xs font-extrabold text-slate-800">🌮 Tacos + Agua + Fruta</p></div>
+                </div>
+                <div class="text-center pt-2"><span class="text-[10px] font-bold text-orange-500">1. Pantalla Principal</span></div>
+              </div>
+            </div>
+
+            <!-- MÓVIL 2 -->
+            <div class="bg-slate-900 p-3 rounded-[32px] border-4 border-slate-800 shadow-2xl">
+              <div class="bg-orange-50 rounded-[24px] p-4 min-h-[380px] flex flex-col justify-between">
+                <div class="space-y-3">
+                  <p class="text-xs font-bold text-slate-900">Productos Disponibles</p>
+                  <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-white p-2 rounded-xl border border-orange-100 text-center"><p class="font-bold text-[11px]">Sándwich</p><p class="text-orange-600 font-black text-xs">$30</p></div>
+                    <div class="bg-white p-2 rounded-xl border border-orange-100 text-center"><p class="font-bold text-[11px]">Jugo Natural</p><p class="text-orange-600 font-black text-xs">$15</p></div>
+                  </div>
+                </div>
+                <div class="text-center pt-2"><span class="text-[10px] font-bold text-orange-500">2. Selección de Productos</span></div>
+              </div>
+            </div>
+
+            <!-- MÓVIL 3 -->
+            <div class="bg-slate-900 p-3 rounded-[32px] border-4 border-slate-800 shadow-2xl">
+              <div class="bg-orange-50 rounded-[24px] p-4 min-h-[380px] flex flex-col justify-between">
+                <div class="space-y-3">
+                  <p class="text-xs font-bold text-slate-900">Resumen del Pedido</p>
+                  <div class="bg-white p-3 rounded-xl border border-orange-100 text-[11px] space-y-1">
+                    <div class="flex justify-between"><span>Sándwich x1</span><span class="font-bold">$30</span></div>
+                    <div class="flex justify-between"><span>Jugo Natural x1</span><span class="font-bold">$15</span></div>
+                    <div class="border-t pt-1 flex justify-between font-black text-xs"><span>Total</span><span>$45</span></div>
+                  </div>
+                  <button onclick="switchView('tienda')" class="w-full bg-emerald-500 text-white font-extrabold text-xs py-2 rounded-xl flex items-center justify-center gap-1 shadow"><i class="fa-brands fa-whatsapp"></i> Probar Pedido</button>
+                </div>
+                <div class="text-center pt-2"><span class="text-[10px] font-bold text-emerald-600">3. Enviar a WhatsApp</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VISTA: APP TIENDA DE PADRES COMPLETA -->
+      <div id="view-tienda" class="hidden max-w-md mx-auto bg-white rounded-3xl border border-orange-200 shadow-2xl overflow-hidden text-slate-800 my-4">
+        <div class="bg-orange-400 p-6 text-white text-center rounded-b-3xl shadow-md">
+          <div class="flex justify-between items-center mb-2">
+            <h1 class="text-2xl font-black">Tendita Landy 🥪</h1>
+            <button onclick="switchView('dashboard')" class="bg-white/20 text-xs px-2.5 py-1 rounded-full font-bold">← Dashboard</button>
+          </div>
+          <p class="text-orange-100 text-xs">¡Hola, Mamá! 👋 Haz tu pedido escolar fácilmente.</p>
+        </div>
+
+        <div class="p-4 space-y-4">
+          <p class="text-xs font-bold uppercase text-slate-400">Catálogo de Productos</p>
+          
+          <div class="space-y-2">
+            <div class="bg-orange-50 p-3 rounded-2xl border border-orange-100 flex justify-between items-center">
+              <div><p class="font-bold text-xs">Sándwich de Jamón</p><p class="text-[10px] text-slate-400">Pan integral, jamón y queso</p><p class="text-xs font-black text-orange-600">$30.00</p></div>
+              <button onclick="agregarCarrito('Sándwich de Jamón', 30)" class="px-3 py-1.5 bg-orange-500 text-white font-bold text-xs rounded-xl shadow">+ Agregar</button>
+            </div>
+
+            <div class="bg-orange-50 p-3 rounded-2xl border border-orange-100 flex justify-between items-center">
+              <div><p class="font-bold text-xs">Jugo Natural</p><p class="text-[10px] text-slate-400">Naranja recién exprimida</p><p class="text-xs font-black text-orange-600">$15.00</p></div>
+              <button onclick="agregarCarrito('Jugo Natural', 15)" class="px-3 py-1.5 bg-orange-500 text-white font-bold text-xs rounded-xl shadow">+ Agregar</button>
+            </div>
+
+            <div class="bg-orange-50 p-3 rounded-2xl border border-orange-100 flex justify-between items-center">
+              <div><p class="font-bold text-xs">Fruta Preparada</p><p class="text-[10px] text-slate-400">Sandía y melón picado</p><p class="text-xs font-black text-orange-600">$20.00</p></div>
+              <button onclick="agregarCarrito('Fruta Preparada', 20)" class="px-3 py-1.5 bg-orange-500 text-white font-bold text-xs rounded-xl shadow">+ Agregar</button>
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-50 rounded-2xl border space-y-3">
+            <p class="text-xs font-bold uppercase text-slate-400">Datos del Alumno</p>
+            <input type="text" id="nombreAlumno" placeholder="Nombre completo del alumno *" class="w-full text-xs p-3 border rounded-xl outline-none focus:border-orange-400 bg-white">
+            <input type="text" id="gradoAlumno" placeholder="Grado y Grupo (Ej. 2° A) *" class="w-full text-xs p-3 border rounded-xl outline-none focus:border-orange-400 bg-white">
+            
+            <div id="resumenCarrito" class="text-xs text-slate-600 border-t pt-2 space-y-1">
+              <p class="font-bold text-slate-800">Carrito de Compras:</p>
+              <div id="itemsCarrito" class="text-[11px] text-slate-500">Ningún producto seleccionado</div>
+              <p class="font-black text-slate-900 text-sm pt-1">Total: $<span id="totalCarrito">0</span>.00</p>
+            </div>
+
+            <button onclick="enviarPedidoWhatsApp()" class="w-full py-3 bg-emerald-500 text-white font-extrabold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2">
+              <i class="fa-brands fa-whatsapp text-sm"></i> Pedir por WhatsApp
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- VISTA DETALLE DE MÓDULOS -->
-      <div id="vista-modulo" class="hidden bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
-          <div>
-            <h2 id="titulo-modulo" class="text-2xl font-black text-slate-900">Módulo</h2>
-            <p class="text-xs text-slate-400">Panel operativo e interactivo en tiempo real</p>
-          </div>
-          <button onclick="verModulo('Dashboard')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
-            ← Volver al Dashboard
-          </button>
+      <!-- VISTAS SECUNDARIAS MÓDULOS -->
+      <div id="view-module" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex justify-between items-center border-b pb-3">
+          <h2 id="module-title" class="text-xl font-black text-slate-900">Módulo</h2>
+          <button onclick="switchView('dashboard')" class="text-xs bg-slate-100 px-3 py-1.5 rounded-lg font-bold">← Dashboard</button>
         </div>
-
-        <div id="contenido-modulo" class="space-y-4 text-sm">
-          <!-- Se llena con Javascript -->
-        </div>
+        <div id="module-content" class="text-xs text-slate-600 space-y-3"></div>
       </div>
 
     </main>
   </div>
 
+  <!-- SCRIPT DE INTERACCIÓN -->
   <script>
-    function verModulo(nombre) {
-      const dashboard = document.getElementById('vista-dashboard');
-      const modulo = document.getElementById('vista-modulo');
-      const titulo = document.getElementById('titulo-modulo');
-      const contenido = document.getElementById('contenido-modulo');
+    let carrito = [];
+    let total = 0;
 
-      if (nombre === 'Dashboard') {
-        dashboard.classList.remove('hidden');
-        modulo.classList.add('hidden');
+    function switchView(viewName) {
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-tienda').classList.add('hidden');
+      document.getElementById('view-module').classList.add('hidden');
+
+      document.querySelectorAll('.sidebar-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('text-slate-400');
+      });
+
+      const activeBtn = document.getElementById('nav-' + viewName);
+      if(activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('bg-blue-600', 'text-white');
+      }
+
+      if (viewName === 'dashboard') {
+        document.getElementById('view-dashboard').classList.remove('hidden');
+      } else if (viewName === 'tienda') {
+        document.getElementById('view-tienda').classList.remove('hidden');
       } else {
-        dashboard.classList.add('hidden');
-        modulo.classList.remove('hidden');
-        titulo.innerText = 'Módulo: ' + nombre;
-
-        if (nombre === 'Productos' || nombre === 'Pedidos WhatsApp') {
-          contenido.innerHTML = `
-            <div class="bg-orange-50 border border-orange-200 p-6 rounded-2xl space-y-4">
-              <h3 class="font-bold text-orange-900 text-base">🥪 Tienda para Padres — Realizar Pedido</h3>
-              <p class="text-xs text-orange-700">Selecciona los productos e ingresa los datos del alumno para enviar el pedido directo a WhatsApp.</p>
-              
-              <div class="space-y-2 max-w-md">
-                <div class="bg-white p-3 rounded-xl border flex justify-between items-center">
-                  <div><p class="font-bold text-xs">Sándwich de Jamón</p><p class="text-orange-600 font-extrabold text-xs">$30.00</p></div>
-                  <button onclick="alert('Añadido')" class="px-3 py-1 bg-orange-500 text-white font-bold text-xs rounded-lg">+ Agregar</button>
-                </div>
-                <div class="bg-white p-3 rounded-xl border flex justify-between items-center">
-                  <div><p class="font-bold text-xs">Jugo Natural</p><p class="text-orange-600 font-extrabold text-xs">$15.00</p></div>
-                  <button onclick="alert('Añadido')" class="px-3 py-1 bg-orange-500 text-white font-bold text-xs rounded-lg">+ Agregar</button>
-                </div>
-              </div>
-
-              <div class="space-y-2 max-w-md pt-2">
-                <input type="text" id="alumno" placeholder="Nombre del alumno" class="w-full text-xs p-3 border rounded-xl outline-none">
-                <input type="text" id="grado" placeholder="Grado y Grupo (Ej. 2° A)" class="w-full text-xs p-3 border rounded-xl outline-none">
-                <button onclick="enviarPed()" class="w-full py-3 bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-lg">
-                  <i class="fa-brands fa-whatsapp text-base"></i> Enviar Pedido por WhatsApp
-                </button>
-              </div>
+        const mod = document.getElementById('view-module');
+        const tit = document.getElementById('module-title');
+        const cont = document.getElementById('module-content');
+        
+        tit.innerText = 'Módulo: ' + viewName.toUpperCase();
+        cont.innerHTML = `
+          <div class="p-4 bg-slate-50 border rounded-xl space-y-2">
+            <p class="font-bold text-slate-800">Gestión de ${viewName}</p>
+            <p>Sincronizado correctamente con el backend SQLite/Prisma del repositorio.</p>
+            <div class="p-2 bg-emerald-50 text-emerald-700 font-mono text-[11px] rounded border border-emerald-200">
+              STATUS 200 OK • Sandbox preparado sin inventario/stock.
             </div>
-          `;
-        } else {
-          contenido.innerHTML = `
-            <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-              <p class="font-bold text-slate-800">Sección activa: <span class="text-blue-600">${nombre}</span></p>
-              <p class="text-xs text-slate-500">Aquí se muestran las configuraciones y registros correspondientes a ${nombre}.</p>
-              <div class="p-3 bg-white border rounded-xl text-xs text-slate-600 font-mono">ESTADO: CONECTADO AL REPOSITORIO DEMO</div>
-            </div>
-          `;
-        }
+          </div>
+        `;
+        mod.classList.remove('hidden');
       }
     }
 
-    function enviarPed() {
-      const nom = document.getElementById('alumno')?.value || 'Alumno Demo';
-      const gra = document.getElementById('grado')?.value || 'General';
-      const msg = `Hola Tendita Landy 👋\nPedido para: ${nom}\nGrado: ${gra}\n- 1x Sándwich ($30)\n- 1x Jugo Natural ($15)\nTotal: $45`;
+    function agregarCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      total += precio;
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      const items = document.getElementById('itemsCarrito');
+      const totalEl = document.getElementById('totalCarrito');
+      if (carrito.length === 0) {
+        items.innerHTML = 'Ningún producto seleccionado';
+      } else {
+        items.innerHTML = carrito.map(i => `• ${i.nombre} ($${i.precio})`).join('<br>');
+      }
+      totalEl.innerText = total;
+    }
+
+    function enviarPedidoWhatsApp() {
+      const alumno = document.getElementById('nombreAlumno').value;
+      const grado = document.getElementById('gradoAlumno').value;
+
+      if (!alumno || !grado) {
+        alert('Por favor completa el nombre y grado del alumno.');
+        return;
+      }
+      if (carrito.length === 0) {
+        alert('Agrega al menos un producto al carrito.');
+        return;
+      }
+
+      let msg = `Hola Tendita Landy 👋\n\nNuevo Pedido Escolar:\nAlumno: ${alumno}\nGrado/Grupo: ${grado}\n\nProductos:\n`;
+      carrito.forEach(i => msg += `- ${i.nombre} ($${i.precio})\n`);
+      msg += `\nTOTAL A PAGAR: $${total}.00\n\nGracias.`;
+
       window.open(`https://wa.me/525500000000?text=${encodeURIComponent(msg)}`, '_blank');
     }
   </script>

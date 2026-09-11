@@ -19,7 +19,7 @@
       <div class="bg-orange-500 text-white font-extrabold text-lg px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg shadow-orange-500/30">
         <i class="fa-solid fa-store"></i> Tendita Landy
       </div>
-      <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">Sistema Escolar Integral • DEMO</span>
+      <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">Sistema Escolar Integral • DEMO / SANDBOX</span>
     </div>
     <div class="flex items-center gap-4 text-xs text-slate-300">
       <span><i class="fa-regular fa-calendar"></i> Hoy, 10 de Septiembre de 2026</span>
@@ -32,16 +32,16 @@
 
   <div class="flex min-h-[calc(100vh-60px)]">
 
-    <!-- SIDEBAR INTERACTIVO -->
+    <!-- SIDEBAR DE NAVEGACIÓN -->
     <aside class="w-64 bg-slate-900 text-slate-300 p-4 shrink-0 flex flex-col justify-between border-r border-slate-800">
       <div class="space-y-6">
         <div>
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Inicio</p>
           <nav class="space-y-1 text-sm font-semibold">
-            <button onclick="navigate('dashboard')" id="btn-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/30">
+            <button onclick="verModulo('Dashboard')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/30">
               <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
             </button>
-            <button onclick="navigate('gestion')" id="btn-gestion" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
+            <button onclick="verModulo('Gestión Financiera')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white">
               <i class="fa-solid fa-wallet w-5"></i> Gestión Financiera
             </button>
           </nav>
@@ -50,90 +50,149 @@
         <div>
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Módulos Financieros</p>
           <nav class="space-y-1 text-xs font-medium">
-            <button onclick="navigate('rentas')" id="btn-rentas" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-house-user w-4"></i> Rentas</button>
-            <button onclick="navigate('nomina')" id="btn-nomina" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-users w-4"></i> Nómina</button>
-            <button onclick="navigate('gastos')" id="btn-gastos" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-receipt w-4"></i> Gastos</button>
-            <button onclick="navigate('metas')" id="btn-metas" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-bullseye w-4"></i> Metas y Ahorro</button>
+            <button onclick="verModulo('Rentas')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-house-user w-4"></i> Rentas</button>
+            <button onclick="verModulo('Nómina')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-users w-4"></i> Nómina</button>
+            <button onclick="verModulo('Gastos')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-receipt w-4"></i> Gastos</button>
+            <button onclick="verModulo('Metas y Ahorro')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-bullseye w-4"></i> Metas y Ahorro</button>
           </nav>
         </div>
 
         <div>
           <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Tienda de Padres</p>
           <nav class="space-y-1 text-xs font-medium">
-            <button onclick="navigate('productos')" id="btn-productos" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-box w-4"></i> Productos</button>
-            <button onclick="navigate('pedidos')" id="btn-pedidos" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-brands fa-whatsapp w-4 text-emerald-400"></i> Pedidos (WhatsApp)</button>
+            <button onclick="verModulo('Productos')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-box w-4"></i> Productos</button>
+            <button onclick="verModulo('Pedidos WhatsApp')" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-brands fa-whatsapp w-4 text-emerald-400"></i> Pedidos (WhatsApp)</button>
           </nav>
         </div>
       </div>
     </aside>
 
-    <!-- ÁREA DE CONTENIDO DINÁMICO -->
+    <!-- ÁREA PRINCIPAL -->
     <main class="flex-1 p-6 overflow-y-auto space-y-6">
 
-      <!-- VISTA 1: DASHBOARD -->
-      <div id="view-dashboard" class="view-panel space-y-6">
+      <!-- VISTA DASHBOARD -->
+      <div id="vista-dashboard" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><p class="text-xs text-slate-400">Ventas del día</p><p class="text-2xl font-extrabold">$ 5,240</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><p class="text-xs text-slate-400">Ganancia neta</p><p class="text-2xl font-extrabold text-blue-600">$ 2,480</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><p class="text-xs text-slate-400">Gastos del día</p><p class="text-2xl font-extrabold text-rose-600">$ 2,760</p></div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><p class="text-xs text-slate-400">Total alumnos</p><p class="text-2xl font-extrabold">48</p></div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            <div><p class="text-xs text-slate-400">Ventas del día</p><p class="text-2xl font-extrabold">$ 5,240</p></div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-sack-dollar"></i></div>
+            <div><p class="text-xs text-slate-400">Ganancia neta</p><p class="text-2xl font-extrabold text-blue-600">$ 2,480</p></div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+            <div><p class="text-xs text-slate-400">Gastos del día</p><p class="text-2xl font-extrabold text-rose-600">$ 2,760</p></div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div><p class="text-xs text-slate-400">Total alumnos</p><p class="text-2xl font-extrabold">48</p></div>
+          </div>
         </div>
 
-        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-xl space-y-3">
-          <span class="bg-white/20 text-xs px-3 py-1 rounded-full font-bold uppercase"><i class="fa-solid fa-piggy-bank"></i> Ahorro Diario Total</span>
-          <p class="text-4xl font-black">$ 620 <span class="text-lg font-medium text-blue-200">/ día</span></p>
-          <p class="text-xs text-blue-100">Cálculo dinámico en tiempo real para cumplir las obligaciones semanales y mensuales.</p>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <p class="text-xs font-bold text-amber-500 uppercase"><i class="fa-solid fa-bullseye"></i> Meta Mensual</p>
+            <p class="text-2xl font-black">$ 20,400 <span class="text-sm font-bold text-slate-400">/ $ 30,000</span></p>
+            <div class="w-full bg-slate-100 h-3 rounded-full"><div class="bg-emerald-500 h-full rounded-full" style="width: 66%"></div></div>
+          </div>
+
+          <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-xl space-y-3">
+            <span class="bg-white/20 text-xs px-3 py-1 rounded-full font-bold uppercase"><i class="fa-solid fa-piggy-bank"></i> Ahorro Diario Total</span>
+            <p class="text-4xl font-black">$ 620 <span class="text-lg font-medium text-blue-200">/ día</span></p>
+            <p class="text-xs text-blue-100">Cálculo dinámico en tiempo real que contempla Renta, Nómina y Vacaciones.</p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+            <p class="text-xs font-bold text-slate-400 uppercase"><i class="fa-regular fa-calendar-check"></i> Próximos Pagos</p>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span>Renta (Semanal)</span><span class="font-bold">$ 2,500</span></div>
+              <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span>Nómina (Semanal)</span><span class="font-bold">$ 1,000</span></div>
+              <div class="flex justify-between p-2 bg-slate-50 rounded-lg"><span>Gasto Mensual</span><span class="font-bold">$ 7,000</span></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- VISTAS SECUNDARIAS (GENÉRICAS INTERACTIVAS) -->
-      <div id="view-module" class="view-panel hidden bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <h2 id="module-title" class="text-2xl font-black text-slate-900">Módulo Seleccionado</h2>
-        <p id="module-desc" class="text-sm text-slate-500">Gestión e información en tiempo real.</p>
-        <div class="p-4 bg-orange-50 border border-orange-200 text-orange-800 rounded-xl text-xs font-semibold">
-          📍 Estás interactuando con el prototipo navegable. Los datos reales se sincronizan desde el backend.
+      <!-- VISTA DETALLE DE MÓDULOS -->
+      <div id="vista-modulo" class="hidden bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+          <div>
+            <h2 id="titulo-modulo" class="text-2xl font-black text-slate-900">Módulo</h2>
+            <p class="text-xs text-slate-400">Panel operativo e interactivo en tiempo real</p>
+          </div>
+          <button onclick="verModulo('Dashboard')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
+            ← Volver al Dashboard
+          </button>
+        </div>
+
+        <div id="contenido-modulo" class="space-y-4 text-sm">
+          <!-- Se llena con Javascript -->
         </div>
       </div>
 
     </main>
   </div>
 
-  <!-- SCRIPT DE NAVEGACIÓN -->
   <script>
-    function navigate(viewName) {
-      // Ocultar todas las vistas
-      document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
-      
-      // Desactivar estilos de botones
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('bg-blue-600', 'text-white');
-        btn.classList.add('text-slate-400');
-      });
+    function verModulo(nombre) {
+      const dashboard = document.getElementById('vista-dashboard');
+      const modulo = document.getElementById('vista-modulo');
+      const titulo = document.getElementById('titulo-modulo');
+      const contenido = document.getElementById('contenido-modulo');
 
-      // Activar botón seleccionado
-      const activeBtn = document.getElementById('btn-' + viewName);
-      if(activeBtn) {
-        activeBtn.classList.remove('text-slate-400');
-        activeBtn.classList.add('bg-blue-600', 'text-white');
-      }
-
-      // Mostrar contenido según la vista
-      if(viewName === 'dashboard') {
-        document.getElementById('view-dashboard').classList.remove('hidden');
+      if (nombre === 'Dashboard') {
+        dashboard.classList.remove('hidden');
+        modulo.classList.add('hidden');
       } else {
-        const modView = document.getElementById('view-module');
-        const titles = {
-          'gestion': 'Gestión Financiera Global',
-          'rentas': 'Módulo de Rentas Semanales',
-          'nomina': 'Módulo de Nómina Variable',
-          'gastos': 'Registro de Gastos',
-          'metas': 'Metas de Ahorro y Fondo SEP',
-          'productos': 'Catálogo de Productos de la Tienda',
-          'pedidos': 'Gestión de Pedidos hacia WhatsApp'
-        };
-        document.getElementById('module-title').innerText = titles[viewName] || 'Módulo ' + viewName;
-        modView.classList.remove('hidden');
+        dashboard.classList.add('hidden');
+        modulo.classList.remove('hidden');
+        titulo.innerText = 'Módulo: ' + nombre;
+
+        if (nombre === 'Productos' || nombre === 'Pedidos WhatsApp') {
+          contenido.innerHTML = `
+            <div class="bg-orange-50 border border-orange-200 p-6 rounded-2xl space-y-4">
+              <h3 class="font-bold text-orange-900 text-base">🥪 Tienda para Padres — Realizar Pedido</h3>
+              <p class="text-xs text-orange-700">Selecciona los productos e ingresa los datos del alumno para enviar el pedido directo a WhatsApp.</p>
+              
+              <div class="space-y-2 max-w-md">
+                <div class="bg-white p-3 rounded-xl border flex justify-between items-center">
+                  <div><p class="font-bold text-xs">Sándwich de Jamón</p><p class="text-orange-600 font-extrabold text-xs">$30.00</p></div>
+                  <button onclick="alert('Añadido')" class="px-3 py-1 bg-orange-500 text-white font-bold text-xs rounded-lg">+ Agregar</button>
+                </div>
+                <div class="bg-white p-3 rounded-xl border flex justify-between items-center">
+                  <div><p class="font-bold text-xs">Jugo Natural</p><p class="text-orange-600 font-extrabold text-xs">$15.00</p></div>
+                  <button onclick="alert('Añadido')" class="px-3 py-1 bg-orange-500 text-white font-bold text-xs rounded-lg">+ Agregar</button>
+                </div>
+              </div>
+
+              <div class="space-y-2 max-w-md pt-2">
+                <input type="text" id="alumno" placeholder="Nombre del alumno" class="w-full text-xs p-3 border rounded-xl outline-none">
+                <input type="text" id="grado" placeholder="Grado y Grupo (Ej. 2° A)" class="w-full text-xs p-3 border rounded-xl outline-none">
+                <button onclick="enviarPed()" class="w-full py-3 bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-lg">
+                  <i class="fa-brands fa-whatsapp text-base"></i> Enviar Pedido por WhatsApp
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          contenido.innerHTML = `
+            <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+              <p class="font-bold text-slate-800">Sección activa: <span class="text-blue-600">${nombre}</span></p>
+              <p class="text-xs text-slate-500">Aquí se muestran las configuraciones y registros correspondientes a ${nombre}.</p>
+              <div class="p-3 bg-white border rounded-xl text-xs text-slate-600 font-mono">ESTADO: CONECTADO AL REPOSITORIO DEMO</div>
+            </div>
+          `;
+        }
       }
+    }
+
+    function enviarPed() {
+      const nom = document.getElementById('alumno')?.value || 'Alumno Demo';
+      const gra = document.getElementById('grado')?.value || 'General';
+      const msg = `Hola Tendita Landy 👋\nPedido para: ${nom}\nGrado: ${gra}\n- 1x Sándwich ($30)\n- 1x Jugo Natural ($15)\nTotal: $45`;
+      window.open(`https://wa.me/525500000000?text=${encodeURIComponent(msg)}`, '_blank');
     }
   </script>
 

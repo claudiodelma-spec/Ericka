@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tendita Landy — Tienda para Padres</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-orange-50 min-h-screen text-slate-800 font-sans p-4">
+
+  <div class="max-w-md mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-orange-200">
+    <!-- BARRA DE REGRESO -->
+    <div class="bg-slate-900 text-white p-4 flex justify-between items-center">
+      <a href="index.html" class="text-xs bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-700">
+        <i class="fa-solid fa-arrow-left"></i> Volver al Dashboard
+      </a>
+      <span class="text-xs font-bold text-orange-400">Tienda Escolar</span>
+    </div>
+
+    <!-- HEADER TIENDA -->
+    <div class="bg-orange-400 p-6 text-white text-center">
+      <h1 class="text-2xl font-black">Tendita Landy 🥪</h1>
+      <p class="text-orange-100 text-xs mt-1">Realiza tu pedido y envíalo directamente por WhatsApp</p>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <div class="p-4 space-y-3">
+      <div class="p-3 bg-orange-50 rounded-2xl border border-orange-100 flex justify-between items-center">
+        <div>
+          <p class="font-bold text-sm">Sándwich de Jamón</p>
+          <p class="text-xs text-slate-400">Pan integral, jamón y queso</p>
+          <p class="text-sm font-black text-orange-600 mt-1">$30.00</p>
+        </div>
+        <button onclick="alert('Añadido al pedido')" class="px-3 py-1.5 bg-orange-500 text-white font-bold text-xs rounded-xl shadow">+ Agregar</button>
+      </div>
+
+      <div class="p-3 bg-orange-50 rounded-2xl border border-orange-100 flex justify-between items-center">
+        <div>
+          <p class="font-bold text-sm">Jugo Natural</p>
+          <p class="text-xs text-slate-400">Naranja recién exprimida</p>
+          <p class="text-sm font-black text-orange-600 mt-1">$15.00</p>
+        </div>
+        <button onclick="alert('Añadido al pedido')" class="px-3 py-1.5 bg-orange-500 text-white font-bold text-xs rounded-xl shadow">+ Agregar</button>
+      </div>
+    </div>
+
+    <!-- FORMULARIO DE ALUMNO -->
+    <div class="p-4 border-t border-slate-100 space-y-2">
+      <p class="text-xs font-bold text-slate-400 uppercase">Datos del Alumno</p>
+      <input type="text" id="alumno" placeholder="Nombre completo del alumno" class="w-full text-xs p-2.5 border rounded-xl outline-none focus:border-orange-400">
+      <input type="text" id="grado" placeholder="Grado y Grupo (Ej. 2° A)" class="w-full text-xs p-2.5 border rounded-xl outline-none focus:border-orange-400">
+      
+      <button onclick="enviarWhatsApp()" class="w-full py-3 bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2 mt-2">
+        <i class="fa-brands fa-whatsapp text-sm"></i> Pedir por WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function enviarWhatsApp() {
+      const alumno = document.getElementById('alumno').value;
+      const grado = document.getElementById('grado').value;
+      if (!alumno) { alert('Por favor ingresa el nombre del alumno'); return; }
+      const msg = `Hola Tendita Landy 👋\nPedido para: ${alumno}\nGrado: ${grado}\n- 1x Sándwich ($30)\n- 1x Jugo Natural ($15)\nTotal: $45`;
+      window.open(`https://wa.me/525500000000?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+  </script>
+
+</body>
+</html>

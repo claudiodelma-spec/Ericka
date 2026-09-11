@@ -3,44 +3,306 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tendita Landy — Tienda de Padres</title>
+  <title>Tendita Landy — Sistema Integral</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
-<body class="bg-orange-50 min-h-screen text-slate-800 font-sans pb-24">
+<body class="text-slate-800">
 
-  <!-- HEADER TIENDA -->
-  <header class="bg-orange-400 p-6 rounded-b-3xl shadow-md text-white max-w-md mx-auto">
-    <div className="flex justify-between items-center mb-2">
-      <h1 class="text-2xl font-black tracking-wide">Tendita Landy 🥪</h1>
-      <span class="bg-white/20 text-xs px-2.5 py-1 rounded-full font-bold">DEMO</span>
+  <!-- TOP HEADER BRANDING -->
+  <header class="bg-slate-900 text-white px-6 py-3 flex justify-between items-center border-b border-slate-800">
+    <div class="flex items-center gap-3">
+      <div class="bg-orange-500 text-white font-extrabold text-lg px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg shadow-orange-500/30">
+        <i class="fa-solid fa-store"></i> Tendita Landy
+      </div>
+      <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">Sistema Escolar Integral • DEMO / SANDBOX</span>
     </div>
-    <p class="text-orange-100 text-sm">¡Hola! 👋 ¿Qué quieres pedir hoy?</p>
+    <div class="flex items-center gap-4 text-xs text-slate-300">
+      <span><i class="fa-regular fa-calendar"></i> Hoy, 10 de Septiembre de 2026</span>
+      <div class="flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
+        <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">A</div>
+        <span>Administrador (admin@tenditaandy.com)</span>
+      </div>
+    </div>
   </header>
 
-  <!-- PRODUCTOS DE MUESTRA -->
-  <main class="max-w-md mx-auto p-4 space-y-3">
-    <div class="bg-white p-4 rounded-2xl border border-orange-100 shadow-sm flex justify-between items-center">
-      <div>
-        <p class="font-bold text-slate-900">Sándwich de Jamón</p>
-        <p class="text-xs text-slate-400">Pan integral, jamón y queso</p>
-        <p class="text-sm font-extrabold text-orange-600 mt-1">$30.00</p>
-      </div>
-      <button onclick="alert('Pedido listo para enviar por WhatsApp')" class="px-3.5 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs">
-        + Agregar
-      </button>
-    </div>
+  <div class="flex min-h-[calc(100vh-60px)]">
 
-    <div class="bg-white p-4 rounded-2xl border border-orange-100 shadow-sm flex justify-between items-center">
-      <div>
-        <p class="font-bold text-slate-900">Jugo Natural</p>
-        <p class="text-xs text-slate-400">Naranja recién exprimida</p>
-        <p class="text-sm font-extrabold text-orange-600 mt-1">$15.00</p>
+    <!-- SIDEBAR DE NAVEGACIÓN -->
+    <aside class="w-64 bg-slate-900 text-slate-300 p-4 shrink-0 flex flex-col justify-between border-r border-slate-800">
+      <div class="space-y-6">
+        <div>
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Inicio</p>
+          <nav class="space-y-1 text-sm font-semibold">
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/30">
+              <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i class="fa-solid fa-wallet w-5"></i> Gestión Financiera
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Módulos Financieros</p>
+          <nav class="space-y-1 text-xs font-medium">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-house-user w-4"></i> Rentas</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-users w-4"></i> Nómina</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-receipt w-4"></i> Gastos</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-bullseye w-4"></i> Metas y Ahorro</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-umbrella-beach w-4"></i> Vacaciones</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-file-invoice w-4"></i> Reportes</a>
+          </nav>
+        </div>
+
+        <div>
+          <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-2">Tienda de Padres</p>
+          <nav class="space-y-1 text-xs font-medium">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-box w-4"></i> Productos</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-layer-group w-4"></i> Categorías</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-brands fa-whatsapp w-4 text-emerald-400"></i> Pedidos (WhatsApp)</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-calendar-day w-4"></i> Menú Diario</a>
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-images w-4"></i> Carrusel</a>
+          </nav>
+        </div>
       </div>
-      <button onclick="alert('Pedido listo para enviar por WhatsApp')" class="px-3.5 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs">
-        + Agregar
-      </button>
-    </div>
-  </main>
+
+      <div class="pt-4 border-t border-slate-800 text-xs">
+        <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"><i class="fa-solid fa-gear w-4"></i> Configuración General</a>
+      </div>
+    </aside>
+
+    <!-- DASHBOARD PANEL PRINCIPAL -->
+    <main class="flex-1 p-6 overflow-y-auto space-y-6">
+
+      <!-- TARJETAS SUPERIORES DE MÉTRICAS -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-400">Ventas del día</p>
+            <p class="text-2xl font-extrabold text-slate-900">$ 5,240</p>
+            <p class="text-[11px] font-bold text-emerald-600 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 12% vs. ayer</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-400">Ganancia neta</p>
+            <p class="text-2xl font-extrabold text-slate-900">$ 2,480</p>
+            <p class="text-[11px] font-bold text-blue-600 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 8% vs. ayer</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-400">Gastos del día</p>
+            <p class="text-2xl font-extrabold text-slate-900">$ 2,760</p>
+            <p class="text-[11px] font-bold text-rose-500 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 5% vs. ayer</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-400">Total alumnos</p>
+            <p class="text-2xl font-extrabold text-slate-900">48</p>
+            <p class="text-[11px] font-bold text-purple-600 mt-0.5"><i class="fa-solid fa-arrow-up"></i> 2% vs. semana anterior</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN MEDIA: METAS + AHORRO DIARIO + PRÓXIMOS PAGOS -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- META MENSUAL Y FONDO DE VACACIONES -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-5">
+          <div class="border-b border-slate-100 pb-4">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5"><i class="fa-solid fa-bullseye"></i> Meta Mensual</span>
+            </div>
+            <p class="text-2xl font-black text-slate-900">$ 20,400 <span class="text-sm font-bold text-slate-400">/ $ 30,000</span></p>
+            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden mt-3">
+              <div class="bg-emerald-500 h-full rounded-full" style="width: 66%"></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-2">Necesitas generar/ahorrar por día: <span class="font-extrabold text-slate-900">$ 333</span></p>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 flex items-center gap-1.5"><i class="fa-solid fa-tree"></i> Fondo de Vacaciones (SEP)</span>
+            </div>
+            <p class="text-xs text-slate-400">Objetivo: $ 40,000 • Ahorrado: $ 24,500</p>
+            <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden mt-3">
+              <div class="bg-emerald-400 h-full rounded-full" style="width: 61%"></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-2">Ahorro diario necesario: <span class="font-extrabold text-slate-900">$ 258</span></p>
+          </div>
+        </div>
+
+        <!-- TARJETA DESTACADA: AHORRO DIARIO TOTAL (CÁLCULO DINÁMICO) -->
+        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-xl shadow-blue-500/20 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="bg-white/20 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider"><i class="fa-solid fa-piggy-bank"></i> Ahorro Diario Total</span>
+              <span class="text-xs text-blue-200">Algoritmo Activo</span>
+            </div>
+            <p class="text-xs text-blue-100 mb-2">Para cumplir todas tus metas financieras necesitas ahorrar exactamente:</p>
+            <p class="text-4xl font-black tracking-tight mb-2">$ 620 <span class="text-lg font-medium text-blue-200">/ día</span></p>
+            <p class="text-xs text-blue-100 leading-relaxed">Cálculo en tiempo real que contempla Renta ($2,500/sem), Nómina ($1,000/sem), Gastos Fijos y Fondo de Vacaciones.</p>
+          </div>
+          <button class="w-full py-3 bg-white text-blue-700 font-extrabold text-xs rounded-xl shadow-lg hover:bg-blue-50 transition mt-6">
+            Ver desglose detallado <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- PRÓXIMOS PAGOS -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5"><i class="fa-regular fa-calendar-check"></i> Próximos Pagos Obligatorios</h3>
+          
+          <div class="space-y-3">
+            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div>
+                <p class="text-xs font-bold text-slate-800">Renta (Semanal)</p>
+                <p class="text-[11px] text-slate-400">Vence 15 Sep</p>
+              </div>
+              <span class="text-sm font-black text-slate-900">$ 2,500</span>
+            </div>
+
+            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div>
+                <p class="text-xs font-bold text-slate-800">Nómina (Semanal)</p>
+                <p class="text-[11px] text-slate-400">Vence 15 Sep</p>
+              </div>
+              <span class="text-sm font-black text-slate-900">$ 1,000</span>
+            </div>
+
+            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div>
+                <p class="text-xs font-bold text-slate-800">Gasto Mensual Estimado</p>
+                <p class="text-[11px] text-slate-400">Vence 30 Sep</p>
+              </div>
+              <span class="text-sm font-black text-slate-900">$ 7,000</span>
+            </div>
+
+            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div>
+                <p class="text-xs font-bold text-slate-800">Meta Mensual Ahorro</p>
+                <p class="text-[11px] text-slate-400">Vence 30 Sep</p>
+              </div>
+              <span class="text-sm font-black text-slate-900">$ 20,000</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VISTA PREVIA INTERACTIVA DE LA TIENDA Y APP PARA PADRES -->
+      <div class="bg-gradient-to-r from-orange-400 to-amber-500 rounded-3xl p-6 text-white shadow-xl space-y-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-black">📱 App para Padres — Vista Previa Mobile</h2>
+            <p class="text-xs text-orange-100">Experiencia moderna, fácil y divertida para hacer pedidos vía WhatsApp.</p>
+          </div>
+          <span class="bg-white/20 text-xs px-3 py-1.5 rounded-full font-bold">Mobile First</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- MÓVIL 1: PANTALLA PRINCIPAL -->
+          <div class="bg-slate-900 p-3 rounded-[32px] border-4 border-slate-800 shadow-2xl text-slate-800">
+            <div class="bg-orange-50 rounded-[24px] p-4 min-h-[420px] flex flex-col justify-between">
+              <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                  <span class="text-xs font-black text-orange-600">Tendita Landy 🥪</span>
+                  <div class="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-[10px]"><i class="fa-solid fa-user"></i></div>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-slate-900">¡Hola, Mamá! 👋</p>
+                  <p class="text-[10px] text-slate-400">¿Qué quieres pedir hoy?</p>
+                </div>
+                <div class="bg-orange-500 text-white p-3 rounded-2xl text-center shadow-md">
+                  <p class="text-xs font-extrabold">¡El sabor del día escolar! 🥪</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-orange-100 space-y-1">
+                  <p class="text-[10px] font-bold text-slate-400 uppercase">Menú de hoy</p>
+                  <p class="text-xs font-extrabold text-slate-800">🌮 Tacos + Agua + Fruta</p>
+                </div>
+              </div>
+              <div class="text-center pt-2">
+                <span class="text-[10px] font-bold text-orange-500">1. Pantalla Principal</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MÓVIL 2: PRODUCTOS -->
+          <div class="bg-slate-900 p-3 rounded-[32px] border-4 border-slate-800 shadow-2xl text-slate-800">
+            <div class="bg-orange-50 rounded-[24px] p-4 min-h-[420px] flex flex-col justify-between">
+              <div class="space-y-3">
+                <p class="text-xs font-bold text-slate-900">Productos Disponibles</p>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <div class="bg-white p-2 rounded-xl border border-orange-100 shadow-sm text-center">
+                    <p class="font-bold text-[11px]">Sándwich</p>
+                    <p class="text-orange-600 font-black text-xs">$ 30</p>
+                    <button class="mt-1 w-full bg-orange-500 text-white text-[10px] font-bold py-1 rounded-lg">+ Pedir</button>
+                  </div>
+                  <div class="bg-white p-2 rounded-xl border border-orange-100 shadow-sm text-center">
+                    <p class="font-bold text-[11px]">Jugo Natural</p>
+                    <p class="text-orange-600 font-black text-xs">$ 15</p>
+                    <button class="mt-1 w-full bg-orange-500 text-white text-[10px] font-bold py-1 rounded-lg">+ Pedir</button>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center pt-2">
+                <span class="text-[10px] font-bold text-orange-500">2. Selección de Productos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MÓVIL 3: PEDIDO POR WHATSAPP -->
+          <div class="bg-slate-900 p-3 rounded-[32px] border-4 border-slate-800 shadow-2xl text-slate-800">
+            <div class="bg-orange-50 rounded-[24px] p-4 min-h-[420px] flex flex-col justify-between">
+              <div class="space-y-3">
+                <p class="text-xs font-bold text-slate-900">Resumen del Pedido</p>
+                <div class="bg-white p-3 rounded-xl border border-orange-100 text-[11px] space-y-1">
+                  <div class="flex justify-between"><span>Sándwich x1</span><span class="font-bold">$30</span></div>
+                  <div class="flex justify-between"><span>Jugo natural x1</span><span class="font-bold">$15</span></div>
+                  <div class="border-t border-slate-100 pt-1 flex justify-between font-black text-xs text-slate-900"><span>Total</span><span>$45</span></div>
+                </div>
+                <div class="bg-white p-2 rounded-xl border border-slate-200">
+                  <p class="text-[10px] text-slate-400">Alumno: Santiago (2º Secundaria)</p>
+                </div>
+                <button class="w-full bg-emerald-500 text-white font-extrabold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30">
+                  <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+                </button>
+              </div>
+              <div class="text-center pt-2">
+                <span class="text-[10px] font-bold text-emerald-600">3. Pedido Directo a WhatsApp</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
 
 </body>
 </html>

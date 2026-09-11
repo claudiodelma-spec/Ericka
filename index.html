@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tendita Landy — Tienda de Padres</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-orange-50 min-h-screen text-slate-800 font-sans pb-24">
+
+  <!-- HEADER TIENDA -->
+  <header class="bg-orange-400 p-6 rounded-b-3xl shadow-md text-white max-w-md mx-auto">
+    <div className="flex justify-between items-center mb-2">
+      <h1 class="text-2xl font-black tracking-wide">Tendita Landy 🥪</h1>
+      <span class="bg-white/20 text-xs px-2.5 py-1 rounded-full font-bold">DEMO</span>
+    </div>
+    <p class="text-orange-100 text-sm">¡Hola! 👋 ¿Qué quieres pedir hoy?</p>
+  </header>
+
+  <!-- PRODUCTOS DE MUESTRA -->
+  <main class="max-w-md mx-auto p-4 space-y-3">
+    <div class="bg-white p-4 rounded-2xl border border-orange-100 shadow-sm flex justify-between items-center">
+      <div>
+        <p class="font-bold text-slate-900">Sándwich de Jamón</p>
+        <p class="text-xs text-slate-400">Pan integral, jamón y queso</p>
+        <p class="text-sm font-extrabold text-orange-600 mt-1">$30.00</p>
+      </div>
+      <button onclick="alert('Pedido listo para enviar por WhatsApp')" class="px-3.5 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs">
+        + Agregar
+      </button>
+    </div>
+
+    <div class="bg-white p-4 rounded-2xl border border-orange-100 shadow-sm flex justify-between items-center">
+      <div>
+        <p class="font-bold text-slate-900">Jugo Natural</p>
+        <p class="text-xs text-slate-400">Naranja recién exprimida</p>
+        <p class="text-sm font-extrabold text-orange-600 mt-1">$15.00</p>
+      </div>
+      <button onclick="alert('Pedido listo para enviar por WhatsApp')" class="px-3.5 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs">
+        + Agregar
+      </button>
+    </div>
+  </main>
+
+</body>
+</html>

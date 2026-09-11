@@ -1,0 +1,150 @@
+import React, { useState } from 'react';
+import { ShoppingBag, Send, Plus, Minus } from 'lucide-react';
+
+const DEMO_PRODUCTS = [
+  { id: '1', name: 'Sándwich de Jamón', description: 'Pan integral, jamón y queso', price: 30, category: 'Comida', active: true },
+  { id: '2', name: 'Jugo Natural', description: 'Naranja recién exprimida', price: 15, category: 'Bebidas', active: true },
+  { id: '3', name: 'Fruta Preparada', description: 'Sandía y melón picado', price: 20, category: 'Snacks', active: true },
+  { id: '4', name: 'Torta de Pierna', description: 'Con aguacate y tomate', price: 35, category: 'Comida', active: true },
+];
+
+export default function StoreApp() {
+  const [cart, setCart] = useState<{ [id: string]: number }>({});
+  const [student, setStudent] = useState({ name: '', grade: '', group: '' });
+  const [categoryFilter, setCategoryFilter] = useState('Todos');
+
+  const addToCart = (id: string) => setCart((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+  const removeFromCart = (id: string) => {
+    setCart((prev) => {
+      const updated = { ...prev };
+      if (updated[id] > 1) updated[id]--;
+      else delete updated[id];
+      return updated;
+    });
+  };
+
+  const calculateTotal = () => {
+    return Object.entries(cart).reduce((total, [id, qty]) => {
+      const product = DEMO_PRODUCTS.find((p) => p.id === id);
+      return total + (product ? product.price * qty : 0);
+    }, 0);
+  };
+
+  const handleSendWhatsApp = () => {
+    if (!student.name || !student.grade) {
+      alert('Por favor ingresa el nombre y grado del alumno.');
+      return;
+    }
+
+    let message = `Hola Tendita Landy 👋\n\nQuiero realizar el siguiente pedido:\n\n`;
+    message += `Alumno: ${student.name}\nGrado: ${student.grade} ${student.group}\n\n`;
+
+    Object.entries(cart).forEach(([id, qty]) => {
+      const product = DEMO_PRODUCTS.find((p) => p.id === id);
+      if (product) message += `${qty}x ${product.name} $${product.price * qty}\n`;
+    });
+
+    message += `\nTOTAL: $${calculateTotal()}\n\nGracias.`;
+
+    const link = `https://wa.me/525500000000?text=${encodeURIComponent(message)}`;
+    window.open(link, '_blank');
+  };
+
+  return (
+    <div className="max-w-md mx-auto min-h-screen bg-orange-50 pb-24 font-sans text-slate-800">
+      <header className="bg-orange-400 p-6 rounded-b-3xl shadow-md text-white">
+        <div className="flex justify-between items-center mb-2">
+          <h1 className="text-2xl font-black tracking-wide">Tendita Landy 🥪</h1>
+          <span className="bg-white/20 text-xs px-2.5 py-1 rounded-full font-bold">DEMO</span>
+        </div>
+        <p className="text-orange-100 text-sm">¡Hola! 👋 ¿Qué quieres pedir hoy?</p>
+      </header>
+
+      <div className="p-4 flex gap-2 overflow-x-auto no-scrollbar">
+        {['Todos', 'Comida', 'Bebidas', 'Snacks'].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setCategoryFilter(cat)}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
+              categoryFilter === cat ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-200'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <div className="p-4 space-y-3">
+        {DEMO_PRODUCTS.filter((p) => categoryFilter === 'Todos' || p.category === categoryFilter).map((product) => (
+          <div key={product.id} className="bg-white p-4 rounded-2xl border border-orange-100 shadow-sm flex justify-between items-center">
+            <div>
+              <p className="font-bold text-slate-900">{product.name}</p>
+              <p className="text-xs text-slate-400 mb-1">{product.description}</p>
+              <p className="text-sm font-extrabold text-orange-600">${product.price}</p>
+            </div>
+
+            {cart[product.id] ? (
+              <div className="flex items-center gap-2 bg-orange-100 p-1.5 rounded-xl">
+                <button onClick={() => removeFromCart(product.id)} className="p-1 bg-white rounded-lg text-orange-600">
+                  <Minus className="w-3.5 h-3.5" />
+                </button>
+                <span className="text-xs font-bold text-orange-900 px-1">{cart[product.id]}</span>
+                <button onClick={() => addToCart(product.id)} className="p-1 bg-orange-500 rounded-lg text-white">
+                  <Plus className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button onClick={() => addToCart(product.id)} className="px-3.5 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs flex items-center gap-1">
+                <Plus className="w-3.5 h-3.5" /> Agregar
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {Object.keys(cart).length > 0 && (
+        <div className="p-4 mx-4 bg-white rounded-2xl border border-orange-200 shadow-sm space-y-3">
+          <p className="text-xs font-bold uppercase text-slate-400 tracking-wider">Datos del Alumno</p>
+          <input
+            type="text"
+            placeholder="Nombre del Alumno *"
+            value={student.name}
+            onChange={(e) => setStudent({ ...student, name: e.target.value })}
+            className="w-full text-xs p-3 border border-slate-200 rounded-xl outline-none focus:border-orange-400"
+          />
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Grado (ej. 2º) *"
+              value={student.grade}
+              onChange={(e) => setStudent({ ...student, grade: e.target.value })}
+              className="w-1/2 text-xs p-3 border border-slate-200 rounded-xl outline-none focus:border-orange-400"
+            />
+            <input
+              type="text"
+              placeholder="Grupo (ej. A)"
+              value={student.group}
+              onChange={(e) => setStudent({ ...student, group: e.target.value })}
+              className="w-1/2 text-xs p-3 border border-slate-200 rounded-xl outline-none focus:border-orange-400"
+            />
+          </div>
+        </div>
+      )}
+
+      {Object.keys(cart).length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white p-4 border-t border-slate-200 shadow-lg flex justify-between items-center z-50">
+          <div>
+            <p className="text-xs text-slate-400">Total a pagar</p>
+            <p className="text-xl font-black text-slate-900">${calculateTotal()}</p>
+          </div>
+          <button
+            onClick={handleSendWhatsApp}
+            className="px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-md shadow-emerald-200"
+          >
+            <Send className="w-4 h-4" /> Pedir por WhatsApp
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
